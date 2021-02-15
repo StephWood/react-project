@@ -1,23 +1,37 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
+const groceryItems = [
+  'milk', 'honey', 'apples', 'butter', 'bread', 'chicken', 'ice cream', 'spinach', 'tomatoes', 'avocado'
+];
+
 function App() {
+  // useState hook to update searchTerm state
+  const [searchTerm, setSearchTerm] = useState('');
+  // useState hook to update searchResults state
+  const [searchResults, setSearchResults] = useState([]);
+
+  // event handler to update state with input change
+  const handleChange = event => {
+    setSearchTerm(event.target.value)
+  }
+
+  // useEffect hook to update searchResults when we have a new searchTerm
+  // useEffect(() => {
+  //   const results = groceryItems.filter(item => item.toLowerCase().includes(searchTerm.toLowerCase()));
+  //   setSearchResults(results);
+  // }, [searchTerm]);
+
+  // alternative without useEffect re-rendering and saving search Results to state
+  const results = !searchTerm ? groceryItems : groceryItems.filter(item => item.toLowerCase().includes(searchTerm.toLowerCase()));
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header>Grocery List</header>
+      <input type="text" placeholder="Search" value={searchTerm} onChange={handleChange} />
+      <ul>
+        {results.map(item => (<li>{item}</li>))}
+      </ul>
     </div>
   );
 }
