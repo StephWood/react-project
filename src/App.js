@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
-const groceryItems = [
-  'milk', 'honey', 'apples', 'butter', 'bread', 'chicken', 'ice cream', 'spinach', 'tomatoes', 'avocado'
-];
+import groceryItems from './groceryItems';
 
 function App() {
   // useState hook to update searchTerm state
@@ -13,8 +11,8 @@ function App() {
 
   // event handler to update state with input change
   const handleChange = event => {
-    setSearchTerm(event.target.value)
-  }
+    setSearchTerm(event.target.value);
+  };
 
   // useEffect hook to update searchResults when we have a new searchTerm
   // useEffect(() => {
@@ -23,14 +21,25 @@ function App() {
   // }, [searchTerm]);
 
   // alternative without useEffect re-rendering and saving search Results to state
-  const results = !searchTerm ? groceryItems : groceryItems.filter(item => item.toLowerCase().includes(searchTerm.toLowerCase()));
+  const results = !searchTerm
+    ? groceryItems
+    : groceryItems.filter(item =>
+        item.toLowerCase().includes(searchTerm.toLowerCase())
+      );
 
   return (
-    <div className="App">
+    <div className='App'>
       <header>Grocery List</header>
-      <input type="text" placeholder="Search" value={searchTerm} onChange={handleChange} />
+      <input
+        type='text'
+        placeholder='Search'
+        value={searchTerm}
+        onChange={handleChange}
+      />
       <ul>
-        {results.map(item => (<li>{item}</li>))}
+        {results.map(item => (
+          <li>{item}</li>
+        ))}
       </ul>
     </div>
   );
